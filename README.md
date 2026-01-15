@@ -4,3 +4,7 @@
 ### Мои навыки:
 * Изучаю JS
 * Осваиваю Git 
+
+## Контакты
+* Email: borovaya.polinaaa06@gmail.com
+* GitHub: [Poluanya](https://github.com/Poluanya)
