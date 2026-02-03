@@ -22,25 +22,27 @@ jobs:
         run: npx playwright install --with-deps 
 
       - name: Run UI tests 
-        run: npm run tests:ui -- --reporter=html --output=playwright-report-ui
-        continue-on-error: true
-
-      - name: Run API tests
-        run: npm run tests:api -- --reporter=html --output=playwright-report-api
-        continue-on-error: true
+        run: npx playwright test --grep @ui --reporter=html
+        env:
+          HTML_REPORT_TITLE: "UI Report"
+        continue-on-error: true 
 
       - name: Upload UI test report 
         if: always() 
         uses: actions/upload-artifact@v4 
         with: 
           name: playwright-report-ui 
-          path: playwright-report-ui/
+          path: playwright-report/
           retention-days: 7
+
+      - name: Run API tests
+        run: npx playwright test --grep @api --reporter=html
+        continue-on-error: true
 
       - name: Upload API test report 
         if: always() 
         uses: actions/upload-artifact@v4 
         with: 
           name: playwright-report-api 
-          path: playwright-report-api/
+          path: playwright-report/
           retention-days: 7
