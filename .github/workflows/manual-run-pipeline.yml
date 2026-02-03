@@ -1,15 +1,14 @@
 name: Manual Test Run
 
 on:
-  workflow_dispatch: # Позволяет запускать пайплайн вручную через кнопку
+  workflow_dispatch: 
 
 jobs:
   run-tests:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -20,13 +19,13 @@ jobs:
         run: npm install
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps 
 
       - name: Run UI tests 
-        run: npm run tests:ui -- --reporter=html --output=playwright-report-ui
+        run: npx playwright test --grep @ui --reporter=html --output=playwright-report-ui
 
       - name: Run API tests
-        run: npm run tests:api -- --reporter=html --output=playwright-report-api
+        run: npx playwright test --grep @api --reporter=html --output=playwright-report-api
 
       - name: Upload UI test report 
         if: always() 
@@ -34,7 +33,7 @@ jobs:
         with: 
           name: playwright-report-ui 
           path: playwright-report-ui/
-          retention-days: 7
+          retention-days: 7 
 
       - name: Upload API test report 
         if: always() 
@@ -42,4 +41,4 @@ jobs:
         with: 
           name: playwright-report-api 
           path: playwright-report-api/
-          retention-days: 7
+          retention-days: 7 
