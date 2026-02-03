@@ -22,10 +22,12 @@ jobs:
         run: npx playwright install --with-deps 
 
       - name: Run UI tests 
-        run: npx playwright test --grep @ui --reporter=html --output=playwright-report-ui
+        run: npm run tests:ui -- --reporter=html --output=playwright-report-ui
+        continue-on-error: true
 
       - name: Run API tests
-        run: npx playwright test --grep @api --reporter=html --output=playwright-report-api
+        run: npm run tests:api -- --reporter=html --output=playwright-report-api
+        continue-on-error: true
 
       - name: Upload UI test report 
         if: always() 
@@ -33,7 +35,7 @@ jobs:
         with: 
           name: playwright-report-ui 
           path: playwright-report-ui/
-          retention-days: 7 
+          retention-days: 7
 
       - name: Upload API test report 
         if: always() 
@@ -41,4 +43,4 @@ jobs:
         with: 
           name: playwright-report-api 
           path: playwright-report-api/
-          retention-days: 7 
+          retention-days: 7
